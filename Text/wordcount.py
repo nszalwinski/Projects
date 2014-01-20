@@ -9,15 +9,24 @@ and generate a summary.
 
 from collections import defaultdict
 import string
+import operator
 
 text = raw_input("Enter a string, and I'll print out a word count. ").lower()
 copy = text.translate(string.maketrans("",""), string.punctuation)
 
-wordcount = defaultdict(int)
+counts = defaultdict(int)
 
 words = copy.split()
+total = 0
 
 for word in words:
-    wordcount[word] += 1
+    counts[word] += 1
+    total += 1
 
-print wordcount.items()
+sortcount = sorted(counts.iteritems(), key = operator.itemgetter(1), reverse=True)
+
+print "Most used words:"
+for (word, count) in sortcount[:5]:
+    print(word, count)
+
+print "Total words: " + str(total)
